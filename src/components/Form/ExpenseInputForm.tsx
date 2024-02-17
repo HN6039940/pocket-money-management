@@ -1,0 +1,105 @@
+import { z } from "zod";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { v4 as uuidv4 } from "uuid";
+import { useAppSelector } from "../../store/slice/Hooks/hooks";
+import { setFinanceData } from "../../firebase/firestore/firestore-financeData-operations";
+
+const expenseSchema = z
+  .object({
+    expense: z.coerce
+      .number()
+      .positive({ message: "支出は正の数を入力してください" }),
+    date: z.date(),
+    label: z.string().min(1, { message: "1文字以上入力してください" }),
+  })
+  .refine((data) => data.date <= new Date(), {
+    message: `当日以降の日付は使えません`,
+    path: ["date"],
+  });
+
+type expenseInput = z.infer<typeof expenseSchema>;
+
+const ExpenseInputForm = () => {
+  const { id } = useAppSelector((state) => state.auth);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<expenseInput>({
+    resolver: zodResolver(expenseSchema),
+  });
+
+  const onSubmit: SubmitHandler<expenseInput> = async (data) => {
+    try {
+      const submitData = {
+        amount: data.expense,
+        date: data.date,
+        label: data.label,
+        id: uuidv4(),
+        useruid: id,
+      };
+      await setFinanceData(submitData);
+      console.log(submitData);
+      reset();
+    } catch (error) {
+      console.log(error);
+      reset();
+    }
+  };
+
+  return (
+    <div className=" min-w-60 max-w-2xl rounded-sm bg-yellow-400 p-3">
+      <form action="" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label htmlFor="expense">支出</label>
+          <input
+            type="number"
+            id="expense"
+            className="min-h-10 w-full rounded-sm"
+            {...register("expense", {
+              required: "支出を入力してください",
+            })}
+          />
+          {errors.expense && (
+            <p className="text-sm text-red-500">{errors.expense.message}</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="expense">日付</label>
+          <input
+            type="date"
+            id="expense"
+            className="min-h-10 w-full rounded-sm"
+            {...register("date", {
+              required: "日付を入力してください",
+              valueAsDate: true,
+            })}
+          />
+          {errors.date && (
+            <p className="text-sm text-red-500">{errors.date.message}</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="expense">種類</label>
+          <input
+            type="text"
+            id="expense"
+            className="min-h-10 w-full rounded-sm"
+            placeholder="食費"
+            {...register("label", {
+              required: "入力してください",
+            })}
+          />
+          {errors.label && (
+            <p className="text-sm text-red-500">{errors.label.message}</p>
+          )}
+        </div>
+        <input type="submit" value="送信する" />
+      </form>
+    </div>
+  );
+};
+
+export default ExpenseInputForm;
