@@ -26,12 +26,6 @@ const financeSlice = createSlice({
   name: "finance",
   initialState,
   reducers: {
-    addIncome(state, action: PayloadAction<IncomesItem>) {
-      state.incomes.push(action.payload);
-    },
-    addExpense(state, action: PayloadAction<ExpensesItem>) {
-      state.expense.push(action.payload);
-    },
     setFireStoreData(state, action: PayloadAction<FinanceState>) {
       state.incomes = action.payload.incomes;
       state.expense = action.payload.expense;
@@ -39,5 +33,5 @@ const financeSlice = createSlice({
   },
 });
 
-export const { addIncome, addExpense, setFireStoreData } = financeSlice.actions;
+export const { setFireStoreData } = financeSlice.actions;
 export default financeSlice.reducer;

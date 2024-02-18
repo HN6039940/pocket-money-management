@@ -1,17 +1,26 @@
 import { type ExpensesItem } from "../../../store/slice/financeSlice";
 import { formattedDate } from "../../../utils/format";
+import { useAppSelector } from "../../../store/slice/Hooks/hooks";
+import { deleteFinanceData } from "../../../firebase/firestore/firestore-financeData-operations";
 
-const expenseList = (props: ExpensesItem) => {
+const ExpenseList = (props: ExpensesItem) => {
   const { id, date, amount, label } = props;
+  const { id: useruid } = useAppSelector((state) => state.auth);
+  const dateobj = new Date(date as string);
   const formatDate = formattedDate(date as string);
+  const handleCLick = async () => {
+    await deleteFinanceData({ id, amount, date: dateobj, useruid, label });
+  };
   return (
     <div className="item-center flex items-center bg-green-500">
       <li className="flex-grow text-xl">{formatDate}</li>
       <li className=" flex-grow text-xl">{amount}円</li>
       <li className="flex-grow text-xl">{label}</li>
-      <button className="block p-4 text-xl">delete</button>
+      <button className="block p-4 text-xl" onClick={handleCLick}>
+        delete
+      </button>
     </div>
   );
 };
 
-export default expenseList;
+export default ExpenseList;

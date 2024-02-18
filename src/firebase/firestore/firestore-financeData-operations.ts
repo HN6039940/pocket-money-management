@@ -36,6 +36,8 @@ const isExpenseData = (
   return "label" in data;
 };
 
+// ------ Firestore Expense And Incomes Data Operations ------
+
 export const getDocRef = async (
   uid: string,
 ): Promise<FinanceData | undefined> => {
@@ -81,14 +83,15 @@ export const listenToDoc = (
     (docSnap) => {
       if (docSnap.exists()) {
         const { expense, incomes } = docSnap.data() as FinanceData;
+        console.log(expense, incomes);
         callback({
-          expense: expense.map((e) => ({
-            ...e,
-            date: (e.date as Timestamp).toDate().toISOString() as string,
+          expense: expense.map((item) => ({
+            ...item,
+            date: (item.date as Timestamp).toDate().toISOString() as string,
           })),
-          incomes: incomes.map((i) => ({
-            ...i,
-            date: (i.date as Timestamp).toDate().toISOString() as string,
+          incomes: incomes.map((item) => ({
+            ...item,
+            date: (item.date as Timestamp).toDate().toISOString() as string,
           })),
         });
       } else {
@@ -111,26 +114,7 @@ export const createNewDocument = async (uid: string) => {
       expense: [],
       incomes: [],
     });
-    console.log("Document successfully written!");
-  } catch (error) {
-    console.error("Error writing document: ", error);
-  }
-};
-
-// Users Firestore Data
-
-export const createUserDoc = async (
-  uid: string,
-  name: string,
-  isLogin: boolean,
-) => {
-  const userDocRef = doc(db, `Users/${uid}`);
-  try {
-    await setDoc(userDocRef, {
-      name,
-      isLogin,
-    });
-    console.log("Document successfully written!");
+    console.log("create new document!");
   } catch (error) {
     console.error("Error writing document: ", error);
   }
@@ -156,6 +140,53 @@ export const setFinanceData = async (
       });
       console.log("Document successfully written!");
     }
+  } catch (error) {
+    console.error("Error writing document: ", error);
+  }
+};
+
+// delete data from map in array in firestore
+export const deleteFinanceData = async (
+  data: submitExpenseData | submitIncomeData,
+) => {
+  const { useruid } = data;
+  try {
+    const docRef = doc(db, `Datas/${useruid}`);
+    const getDocRef = await getDoc(docRef);
+    const { expense, incomes } = getDocRef.data() as FinanceData;
+
+    if (isExpenseData(data)) {
+      const { id } = data;
+      const newExpense = expense.filter((item) => item.id !== id);
+      await updateDoc(docRef, {
+        expense: newExpense,
+      });
+    } else {
+      const { id } = data;
+      const newIncomes = incomes.filter((item) => item.id !== id);
+      await updateDoc(docRef, {
+        incomes: newIncomes,
+      });
+    }
+  } catch (error) {
+    console.error("Error writing document: ", error);
+  }
+};
+
+// ------ Firestore User Data Operations ------
+
+export const createUserDoc = async (
+  uid: string,
+  name: string,
+  isLogin: boolean,
+) => {
+  const userDocRef = doc(db, `Users/${uid}`);
+  try {
+    await setDoc(userDocRef, {
+      name,
+      isLogin,
+    });
+    console.log("Document successfully written!");
   } catch (error) {
     console.error("Error writing document: ", error);
   }
