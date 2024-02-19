@@ -1,22 +1,31 @@
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
 import NavBar from "../../components/NavBar";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/slice/Hooks/hooks";
 import { listenToDoc } from "../../firebase/firestore/firestore-financeData-operations";
+import { isLoginUser } from "../../firebase/auth/fireauth-config";
 import { setFireStoreData } from "../../store/slice/financeSlice";
+
 const User = () => {
-  const { isLogin, name, id } = useAppSelector((state) => state.auth);
+  const { name, id } = useAppSelector((state) => state.auth);
   const { incomes, expense } = useAppSelector((state) => state.finance);
   const dispatch = useAppDispatch();
-  console.log(isLogin);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["financeData", id, dispatch],
+    queryFn: async () => {
+      const response = await isLoginUser();
+      if (response === undefined) {
+        return null;
+      }
+      return response;
+    },
+  });
+
   useEffect(() => {
-    if (id) {
-      localStorage.setItem("uid", id);
-    }
-    const userUid = id || (localStorage.getItem("uid") as string);
-    const unsubscribe = listenToDoc(userUid, (data) => {
+    const unsubscribe = listenToDoc((data) => {
       if (data) {
         dispatch(setFireStoreData(data));
       } else {
@@ -26,7 +35,12 @@ const User = () => {
     return () => unsubscribe();
   }, [id, dispatch]);
 
+  if (isLoading) return <p>loading...</p>;
+
+  if (isError && !data) return <p>ログインしてください</p>;
+
   console.log(incomes, expense);
+  console.log(data, isLoading);
 
   return (
     <>

@@ -7,7 +7,6 @@ const SignOutBtn = () => {
     <button
       onClick={() =>
         logOutUser().then(() => {
-          localStorage.removeItem("uid");
           navigate("/");
         })
       }

@@ -1,4 +1,4 @@
-import { db } from "./firestore-config";
+import { db, auth } from "./firestore-config";
 import {
   doc,
   getDoc,
@@ -70,12 +70,15 @@ export const getDocRef = async (
   }
 };
 
-// getSnapshot
+// Realtime listener
 
 export const listenToDoc = (
-  uid: string,
   callback: (data: FinanceData | undefined) => void,
 ) => {
+  const uid = auth.currentUser?.uid;
+  if (!uid) {
+    return () => {};
+  }
   const docRef = doc(db, `Datas`, uid);
 
   return onSnapshot(

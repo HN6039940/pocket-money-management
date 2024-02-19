@@ -12,7 +12,7 @@ const ExpenseList = (props: ExpensesItem) => {
     await deleteFinanceData({ id, amount, date: dateobj, useruid, label });
   };
   return (
-    <div className="item-center flex items-center bg-green-500">
+    <div className="grid grid-cols-4 items-center bg-green-500">
       <li className="flex-grow text-xl">{formatDate}</li>
       <li className=" flex-grow text-xl">{amount}円</li>
       <li className="flex-grow text-xl">{label}</li>
