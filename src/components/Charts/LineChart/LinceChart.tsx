@@ -1,7 +1,7 @@
 import React from "react";
 
-const LinceChart = () => {
+const PaymentLineChart = () => {
   return <div>LinceChart</div>;
 };
 
-export default LinceChart;
+export default PaymentLineChart;

@@ -1,5 +1,5 @@
 import { type ExpensesItem } from "../../../store/slice/financeSlice";
-import { formattedDate } from "../../../utils/format";
+import { formattedDateByja } from "../../../utils/format";
 import { useAppSelector } from "../../../store/slice/Hooks/hooks";
 import { deleteFinanceData } from "../../../firebase/firestore/firestore-financeData-operations";
 
@@ -7,7 +7,7 @@ const ExpenseList = (props: ExpensesItem) => {
   const { id, date, amount, label } = props;
   const { id: useruid } = useAppSelector((state) => state.auth);
   const dateobj = new Date(date as string);
-  const formatDate = formattedDate(date as string);
+  const formatDate = formattedDateByja(date as string);
   const handleCLick = async () => {
     await deleteFinanceData({ id, amount, date: dateobj, useruid, label });
   };

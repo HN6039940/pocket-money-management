@@ -1,7 +1,7 @@
 import React from "react";
 
-const AreaChart = () => {
+const PaymentAreaChart = () => {
   return <div>AreaChart</div>;
 };
 
-export default AreaChart;
+export default PaymentAreaChart;
