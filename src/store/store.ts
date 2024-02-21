@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import FinanceSlice from "./slice/financeSlice";
 import AuthSlice from "./slice/userAuthSclice";
+import chartSlice from "./slice/chartSlice";
 
 const store = configureStore({
   reducer: {
     // Add your reducers here
     finance: FinanceSlice,
     auth: AuthSlice,
+    charts: chartSlice,
   },
 });
 

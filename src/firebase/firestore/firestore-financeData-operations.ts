@@ -48,13 +48,13 @@ export const getDocRef = async (
     if (docSnap.exists()) {
       const { expense, incomes } = docSnap.data() as FinanceData;
       return {
-        expense: expense.map((e) => ({
-          ...e,
-          date: (e.date as Timestamp).toDate().toISOString() as string,
+        expense: expense.map((item) => ({
+          ...item,
+          date: (item.date as Timestamp).toDate().toISOString() as string,
         })),
-        incomes: incomes.map((i) => ({
-          ...i,
-          date: (i.date as Timestamp).toDate().toISOString() as string,
+        incomes: incomes.map((item) => ({
+          ...item,
+          date: (item.date as Timestamp).toDate().toISOString() as string,
         })),
       };
     } else {

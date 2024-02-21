@@ -6,11 +6,13 @@ import { deleteFinanceData } from "../../../firebase/firestore/firestore-finance
 const ExpenseList = (props: ExpensesItem) => {
   const { id, date, amount, label } = props;
   const { id: useruid } = useAppSelector((state) => state.auth);
-  const dateobj = new Date(date as string);
   const formatDate = formattedDateByja(date as string);
+
+  const dateobj = new Date(date as string);
   const handleCLick = async () => {
     await deleteFinanceData({ id, amount, date: dateobj, useruid, label });
   };
+
   return (
     <div className="grid grid-cols-4 items-center bg-green-500">
       <li className="flex-grow text-xl">{formatDate}</li>
