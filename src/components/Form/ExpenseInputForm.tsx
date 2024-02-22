@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { v4 as uuidv4 } from "uuid";
 import { useAppSelector } from "../../store/slice/Hooks/hooks";
 import { setFinanceData } from "../../firebase/firestore/firestore-financeData-operations";
+import { formattedDateByja } from "../../utils/format";
 
 const expenseSchema = z
   .object({
@@ -13,10 +14,15 @@ const expenseSchema = z
     date: z.date(),
     label: z.string().min(1, { message: "1文字以上入力してください" }),
   })
-  .refine((data) => data.date <= new Date(), {
-    message: `当日以降の日付は使えません`,
-    path: ["date"],
-  });
+  .refine(
+    (data) =>
+      new Date(formattedDateByja(data.date)) <=
+      new Date(formattedDateByja(new Date())),
+    {
+      message: `当日以降の日付は使えません`,
+      path: ["date"],
+    },
+  );
 
 type expenseInput = z.infer<typeof expenseSchema>;
 

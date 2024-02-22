@@ -52,7 +52,7 @@ export const getMonthEnd = (year: number, month: number) => {
 //   }
 // };
 
-const get7DaysAgo = (date: string, index: number) => {
+const getDaysAgo = (date: string, index: number) => {
   const targetDate = new Date(date);
   targetDate.setDate(targetDate.getDate() - index);
   const year = targetDate.getFullYear();
@@ -62,12 +62,18 @@ const get7DaysAgo = (date: string, index: number) => {
   return `${year}/${month < 10 ? "0" + month : month}/${day < 10 ? "0" + day : day}`;
 };
 
-export const getBeginAndEndOfMonth = (date: string) => {
+export const createDaysAgoArray = (dateLength: number) => {
+  return Array.from({ length: dateLength }, (_, i) =>
+    getDaysAgo(new Date().toISOString(), i),
+  );
+};
+
+export const getBeginAndEndOfMonth = (
+  date: Date,
+): { beginMonth: string; endMonth: string } => {
   const targetDate = new Date(date);
-  const beginMonth = targetDate.setDate(1);
   const year = targetDate.getFullYear();
   const month = targetDate.getMonth() + 1;
-  const endMonth = targetDate.setDate(getMonthEnd(year, month));
   return {
     beginMonth: `${year}/${month < 10 ? "0" + month : month}/01`,
     endMonth: `${year}/${month < 10 ? "0" + month : month}/${getMonthEnd(year, month)}`,

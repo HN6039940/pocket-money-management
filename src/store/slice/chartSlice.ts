@@ -1,23 +1,46 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { getBeginAndEndOfMonth, createDaysAgoArray } from "../../utils/date";
+import {
+  filterMonthByPieChart,
+  sumAmount,
+  filterMonthByBarChart,
+  filterMonthByAreaChart,
+} from "../../utils/filter";
+import { Timestamp } from "firebase/firestore";
 
-type DataObject = {
+export type IncomeDataObject = {
   amount: number;
-  date: string;
+  date: string | Timestamp;
   id: string;
-  label?: string;
+};
+
+export type ExpenseDataObject = IncomeDataObject & {
+  label: string;
+};
+
+type argumentData = {
+  incomes: IncomeDataObject[];
+  expense: ExpenseDataObject[];
 };
 
 type ChartObject = {
-  name: string;
-  value: number;
   date: string;
+  value: number;
 };
 
 type ChartState = {
-  AreaChart: ChartObject[];
-  BarChart: ChartObject[];
+  AreaChart: { name: string; data: ChartObject[] }[];
   LineChart: ChartObject[];
-  PieChart: ChartObject[];
+  BarChart: {
+    name: string;
+    data: ChartObject[];
+  }[];
+  PieChart: {
+    name: string;
+    value: number;
+    beginMonth: string;
+    endMonth: string;
+  }[];
 };
 
 const initialState: ChartState = {
@@ -27,20 +50,56 @@ const initialState: ChartState = {
   PieChart: [],
 };
 
-const isExpense = (data: DataObject): boolean => {
-  return "label" in data;
-};
-
 const chartsSlice = createSlice({
   name: "charts",
   initialState,
   reducers: {
-    filterAreaChart: (state, action: PayloadAction<DataObject[], string>) => {},
+    createAreaChart: (state, action: PayloadAction<argumentData>) => {
+      const { incomes, expense } = action.payload;
+      const filteredIncome = filterMonthByAreaChart(incomes);
+      const filteredExpense = filterMonthByAreaChart(expense);
+      console.log(filteredIncome, filteredExpense);
+      state.AreaChart = [
+        { name: "収入", data: filteredIncome },
+        { name: "支出", data: filteredExpense },
+      ];
+    },
     filterBarChart: (state, action: PayloadAction<DataObject[]>) => {},
-    filterLineChart: (state, action: PayloadAction<DataObject[]>) => {},
-    filterPieChart: (state, action: PayloadAction<DataObject[]>) => {},
+    createLineChart: (state, action: PayloadAction<argumentData>) => {
+      const { incomes, expense } = action.payload;
+      const array = createDaysAgoArray(7);
+      const filteredIncome = filterMonthByBarChart(incomes, array);
+      const filteredExpense = filterMonthByBarChart(expense, array);
+      state.BarChart = [
+        { name: "収入", data: filteredIncome },
+        { name: "支出", data: filteredExpense },
+      ];
+    },
+    createPieChart: (state, action: PayloadAction<argumentData>) => {
+      const { incomes, expense } = action.payload;
+      const nowDate = new Date();
+      const { beginMonth, endMonth } = getBeginAndEndOfMonth(nowDate);
+      const filteredIncome = filterMonthByPieChart(incomes, {
+        beginMonth,
+        endMonth,
+      });
+      const filteredExpense = filterMonthByPieChart(expense, {
+        beginMonth,
+        endMonth,
+      });
+
+      const sumIncome = sumAmount(filteredIncome);
+      const sumExpense = sumAmount(filteredExpense);
+      const sumData = [
+        { name: "収入", value: sumIncome, beginMonth, endMonth },
+        { name: "支出", value: sumExpense, beginMonth, endMonth },
+      ];
+
+      state.PieChart = sumData;
+    },
   },
 });
 
 export default chartsSlice.reducer;
-export const { filterAreaChart } = chartsSlice.actions;
+export const { createPieChart, createLineChart, createAreaChart } =
+  chartsSlice.actions;
