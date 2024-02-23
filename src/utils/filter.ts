@@ -36,63 +36,63 @@ export const filterMonthByBarChart = (
 ) => {
   const targetSetDate = new Set(targetArray);
 
-  // const setArray = Array.from(targetSetDate).map((item) => {
-  //   return {
-  //     value: 0,
-  //     date: item,
-  //   };
-  // });
+  const setArray = Array.from(targetSetDate).map((item) => {
+    return {
+      value: 0,
+      date: item,
+    };
+  });
 
-  // const reducedData = data.reduce<{
-  //   [date: string]: { value: number; date: string };
-  // }>((acc, cur) => {
-  //   const formattedDate = formattedDateByja(cur.date as string);
-  //   if (targetSetDate.has(formattedDate)) {
-  //     if (formattedDate in acc) {
-  //       return {
-  //         ...acc,
-  //         [formattedDate]: {
-  //           value: acc[formattedDate].value + cur.amount,
-  //           date: formattedDate,
-  //         },
-  //       };
-  //     } else {
-  //       return {
-  //         ...acc,
-  //         [formattedDate]: { value: cur.amount, date: formattedDate },
-  //       };
-  //     }
-  //   }
-  //   return { ...acc };
-  // }, {});
+  const reducedData = data.reduce<{
+    [date: string]: { value: number; date: string };
+  }>((acc, cur) => {
+    const formattedDate = formattedDateByja(cur.date as string);
+    if (targetSetDate.has(formattedDate)) {
+      if (formattedDate in acc) {
+        return {
+          ...acc,
+          [formattedDate]: {
+            value: acc[formattedDate].value + cur.amount,
+            date: formattedDate,
+          },
+        };
+      } else {
+        return {
+          ...acc,
+          [formattedDate]: { value: cur.amount, date: formattedDate },
+        };
+      }
+    }
+    return { ...acc };
+  }, {});
 
   // ここでsetArrayとreducedDataをマージする。条件はsetArrayのdateとreducedDataのdateが一致する場合はreducedDataのvalueをsetArrayのvalueに代入する
 
-  // const result = setArray
-  //   .map((item) => {
-  //     if (item.date in reducedData) {
-  //       return { value: reducedData[item.date].value, date: item.date };
-  //     }
-  //     return item;
-  //   })
-  //   .reverse();
-
-  // return result;
-
-  const reducedData = data.reduce<{ [date: string]: number }>((acc, cur) => {
-    const formattedDate = formattedDateByja(cur.date as string);
-    if (targetSetDate.has(formattedDate)) {
-      acc[formattedDate] = (acc[formattedDate] || 0) + cur.amount;
-    }
-    return acc;
-  }, {});
-
-  return Array.from(targetSetDate)
-    .map((date) => ({
-      value: reducedData[date] || 0,
-      date,
-    }))
+  const result = setArray
+    .map((item) => {
+      if (item.date in reducedData) {
+        return { value: reducedData[item.date].value, date: item.date };
+      }
+      return item;
+    })
     .reverse();
+
+  return result;
+
+  // const reducedData = data.reduce<{ [date: string]: number }>((acc, cur) => {
+  //   const formattedDate = formattedDateByja(cur.date as string);
+  //   if (targetSetDate.has(formattedDate)) {
+  //     acc[formattedDate] = (acc[formattedDate] || 0) + cur.amount;
+  //   }
+  //   return acc;
+  // }, {});
+
+  // return Array.from(targetSetDate)
+  //   .map((date) => ({
+  //     value: reducedData[date] || 0,
+  //     date,
+  //   }))
+  //   .reverse();
 };
 
 // エリアチャート
@@ -136,4 +136,26 @@ export const filterMonthByAreaChart = (
   });
 
   return result;
+};
+
+// ラベル別で多い物を抽出し、その金額をラベル別にまとめる
+
+export const filterLabelByBarChart = (data: ExpenseDataObject[]) => {
+  const reducedDate = data.reduce<{
+    [label: string]: { label: string; value: number; quantity: number };
+  }>((acc, cur) => {
+    if (!acc[cur.label]) {
+      acc[cur.label] = {
+        label: cur.label,
+        value: cur.amount,
+        quantity: 1,
+      };
+      return acc;
+    } else {
+      acc[cur.label].value += cur.amount;
+      acc[cur.label].quantity++;
+      return acc;
+    }
+  }, {});
+  return Object.values(reducedDate);
 };

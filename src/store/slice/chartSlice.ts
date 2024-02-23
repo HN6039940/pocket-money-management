@@ -5,7 +5,9 @@ import {
   sumAmount,
   filterMonthByBarChart,
   filterMonthByAreaChart,
+  filterLabelByBarChart,
 } from "../../utils/filter";
+import { sortQuantity } from "../../utils/sort";
 import { Timestamp } from "firebase/firestore";
 
 export type IncomeDataObject = {
@@ -29,8 +31,8 @@ type ChartObject = {
 };
 
 type ChartState = {
-  AreaChart: { name: string; data: ChartObject[] }[];
-  LineChart: ChartObject[];
+  AreaChart: { date: string; incomeValue: number; expenseValue: number }[];
+  LabelBarChart: { label: string; value: number; quantity: number }[];
   BarChart: {
     name: string;
     data: ChartObject[];
@@ -46,7 +48,7 @@ type ChartState = {
 const initialState: ChartState = {
   AreaChart: [],
   BarChart: [],
-  LineChart: [],
+  LabelBarChart: [],
   PieChart: [],
 };
 
@@ -58,18 +60,36 @@ const chartsSlice = createSlice({
       const { incomes, expense } = action.payload;
       const filteredIncome = filterMonthByAreaChart(incomes);
       const filteredExpense = filterMonthByAreaChart(expense);
-      console.log(filteredIncome, filteredExpense);
-      state.AreaChart = [
-        { name: "収入", data: filteredIncome },
-        { name: "支出", data: filteredExpense },
-      ];
+      const concatChartData = filteredIncome.map((item, index) => {
+        return {
+          date: item.date,
+          incomeValue: item.value,
+          expenseValue: filteredExpense[index].value,
+        };
+      });
+      state.AreaChart = concatChartData;
     },
-    filterBarChart: (state, action: PayloadAction<DataObject[]>) => {},
+    createLabelBarChart: (
+      state,
+      action: PayloadAction<ExpenseDataObject[]>,
+    ) => {
+      const { payload } = action;
+      const filteredLabel = filterLabelByBarChart(payload);
+      state.LabelBarChart = sortQuantity(filteredLabel);
+    },
     createLineChart: (state, action: PayloadAction<argumentData>) => {
       const { incomes, expense } = action.payload;
       const array = createDaysAgoArray(7);
       const filteredIncome = filterMonthByBarChart(incomes, array);
       const filteredExpense = filterMonthByBarChart(expense, array);
+      const concatChartData = filteredIncome.map((item, index) => {
+        return {
+          date: item.date,
+          incomeValue: item.value,
+          expenseValue: filteredExpense[index].value,
+        };
+      });
+      console.log(concatChartData);
       state.BarChart = [
         { name: "収入", data: filteredIncome },
         { name: "支出", data: filteredExpense },
@@ -101,5 +121,9 @@ const chartsSlice = createSlice({
 });
 
 export default chartsSlice.reducer;
-export const { createPieChart, createLineChart, createAreaChart } =
-  chartsSlice.actions;
+export const {
+  createPieChart,
+  createLineChart,
+  createAreaChart,
+  createLabelBarChart,
+} = chartsSlice.actions;

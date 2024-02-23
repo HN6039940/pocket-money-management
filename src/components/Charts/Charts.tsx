@@ -10,15 +10,15 @@ const Charts = () => {
         <PaymentPieChart />
       </div>
       <div className=" bg-green-400">
-        <PaymentAreaChart />
-      </div>
-      <div className="bg-green-400">
         <PaymentBarchart />
       </div>
-      <div className="bg-green-400">
-        <PaymentLinceChart />
-        <PaymentLinceChart />
+      <div className="col-span-2 bg-green-400">
+        <PaymentAreaChart />
       </div>
+      {/* <div className="bg-green-400">
+        <PaymentLinceChart />
+        <PaymentLinceChart />
+      </div> */}
     </div>
   );
 };

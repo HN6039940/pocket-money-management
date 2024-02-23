@@ -1,7 +1,60 @@
-import React from "react";
+import { useEffect } from "react";
+import { createSelector } from "reselect";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../store/slice/Hooks/hooks";
+import { RootState } from "../../../store/store";
+import { createLabelBarChart } from "../../../store/slice/chartSlice";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Legend,
+  Tooltip,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
 
 const PaymentBarchart = () => {
-  return <div>Barchart</div>;
+  const dispatch = useAppDispatch();
+  const selectGraph = (state: RootState) => state.charts;
+  const selectBarChart = createSelector(
+    selectGraph,
+    (state) => state.LabelBarChart,
+  );
+  const barChartData = useAppSelector(selectBarChart);
+
+  const { expense } = useAppSelector((state) => state.finance);
+
+  useEffect(() => {
+    dispatch(createLabelBarChart(expense));
+  }, [expense, dispatch]);
+
+  console.log(barChartData);
+
+  return (
+    <div>
+      <h2 className="text-3xl font-bold">BarChart</h2>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={barChartData} layout="vertical" className=" mt-5">
+          <CartesianGrid strokeDasharray="3 3" />
+          <Legend />
+          <Tooltip />
+          <XAxis type="number" />
+          <YAxis type="category" dataKey="label" />
+          <Bar
+            dataKey="quantity"
+            fill="#fff788"
+            name={"タグ数"}
+            radius={[5, 5, 0, 0]}
+            barSize={50}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
 };
 
 export default PaymentBarchart;

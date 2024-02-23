@@ -1,61 +1,60 @@
-// import {
-//   ResponsiveContainer,
-//   PieChart,
-//   Pie,
-//   Cell,
-//   Legend,
-//   Tooltip,
-// } from "recharts";
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  Tooltip,
+} from "recharts";
+import { useEffect } from "react";
+import { createSelector } from "reselect";
 import {
   useAppSelector,
   useAppDispatch,
 } from "../../../store/slice/Hooks/hooks";
-import {
-  createPieChart,
-  createLineChart,
-  createBarChart,
-  createAreaChart,
-} from "../../../store/slice/chartSlice";
+import { RootState } from "../../../store/store";
+import { createPieChart } from "../../../store/slice/chartSlice";
 const PaymentPieChart = () => {
   const dispatch = useAppDispatch();
-  // const limit = 100000;
+  const selectGraph = (state: RootState) => state.charts;
+
+  const selectPieChart = createSelector(selectGraph, (state) => state.PieChart);
+  const pieChartData = useAppSelector(selectPieChart);
   const { incomes, expense } = useAppSelector((state) => state.finance);
+
+  useEffect(() => {
+    dispatch(createPieChart({ incomes, expense }));
+  }, [incomes, expense, dispatch]);
+
   return (
     <div>
-      <h2
-        className="text-3xl font-bold"
-        onClick={() => dispatch(createAreaChart({ incomes, expense }))}
-      >
-        PieChart
-      </h2>
-      {/* <ResponsiveContainer width="100%" height={300}>
+      <h2 className="text-3xl font-bold">PieChart</h2>
+      <ResponsiveContainer width="100%" height={300}>
         <PieChart width={400} height={400}>
           <Legend />
-          <Tooltip />
+          <Tooltip
+            animationDuration={2000}
+            contentStyle={{
+              backgroundColor: "#d797fc",
+              border: "1px solid #e5e7eb",
+              borderRadius: "5px",
+              padding: "20px",
+            }}
+          />
           <Pie
             dataKey="value"
             isAnimationActive={true}
-            data={}
+            data={pieChartData}
             cx="50%"
             cy="50%"
-            outerRadius={80}
+            outerRadius={85}
             fill="#8884d8"
             label
           >
-            {sumData.map((entry, index) => (
-              <Cell
-                name={entry.name}
-                key={`cell-${index}`}
-                fill={
-                  index % 2 === 0
-                    ? "rgba(255, 99, 132, 0.6)"
-                    : "rgba(54, 162, 235, 0.6)"
-                }
-              />
-            ))}
+            <Cell fill="#82ca9d" />
           </Pie>
         </PieChart>
-      </ResponsiveContainer> */}
+      </ResponsiveContainer>
     </div>
   );
 };
