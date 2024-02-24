@@ -32,7 +32,7 @@ const PaymentAreaChart = () => {
   console.log(areaChartData);
   return (
     <div>
-      <h2 className=" text-4xl">AreaChart</h2>
+      <h2 className=" mb-5 text-3xl font-bold">AreaChart</h2>
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart
           width={500}

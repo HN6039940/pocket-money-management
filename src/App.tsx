@@ -12,6 +12,7 @@ import LoginPage from "./pages/Home/Login/LogIn";
 import DashBoard from "./pages/User/Dashboard/DashBoard";
 import Transactions from "./pages/User/Transactions/Transactions";
 import SignUp from "./pages/Home/SignUp/SignUp";
+import TablePage from "./pages/User/Table/TablePage";
 
 const BrowserRouter = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const BrowserRouter = createBrowserRouter([
       {
         path: "transaction",
         element: <Transactions />,
+      },
+      {
+        path: "table",
+        element: <TablePage />,
       },
     ],
   },
@@ -52,6 +57,14 @@ function App() {
           }),
         );
       } else {
+        dispatch(
+          setUserInfo({
+            name: "Guest",
+            id: "0",
+            isLogin: false,
+            email: "",
+          }),
+        );
         console.log("not login");
       }
     });

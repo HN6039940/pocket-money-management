@@ -14,7 +14,7 @@ const ExpenseList = (props: ExpensesItem) => {
   };
 
   return (
-    <div className="grid grid-cols-4 items-center bg-green-500">
+    <div className="border-gray grid grid-cols-4 items-center border-b-2 p-2 ">
       <li className="flex-grow text-xl">{formatDate}</li>
       <li className=" flex-grow text-xl">{amount}円</li>
       <li className="flex-grow text-xl">{label}</li>

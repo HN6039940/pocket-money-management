@@ -3,7 +3,7 @@ import NavBar from "../../components/NavBar";
 
 const TopPage = () => {
   return (
-    <section className=" min-h-dvh">
+    <section className="min-h-dvh">
       <NavBar />
       <div className=" container mx-auto">
         <div className=" mt-10 px-3 py-3">

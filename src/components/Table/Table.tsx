@@ -1,13 +1,12 @@
-import { useAppDispatch, useAppSelector } from "../../store/slice/Hooks/hooks";
+import { useAppSelector } from "../../store/slice/Hooks/hooks";
 import IncomeList from "./List/incomeList";
 import ExpenseList from "./List/expenseList";
 
 const Table = () => {
-  const dispatch = useAppDispatch();
   const { expense, incomes } = useAppSelector((state) => state.finance);
   return (
-    <section className="grid grid-cols-2 gap-7 bg-sky-500">
-      <div className="p-3">
+    <section className="grid grid-cols-2 gap-7 ">
+      <div className="border-primary-color rounded-sm border-2 bg-white p-3 shadow-sm">
         <h2 className=" py-3 text-3xl">収入</h2>
         <ul className="">
           {incomes.map((income) => (
@@ -15,7 +14,7 @@ const Table = () => {
           ))}
         </ul>
       </div>
-      <div className="p-3">
+      <div className="border-primary-color rounded-sm border-2 bg-white p-3 shadow-sm">
         <h2 className="py-3 text-3xl">支出</h2>
         <ul>
           {expense.map((expense) => (

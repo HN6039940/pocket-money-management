@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "charcoal-primary": "#454545",
-        "orange-primary": "#FF6000",
-        "lightOrange-primary": "#FFA559",
-        "paleOrange-primary": "#FFE6C7",
+        "primary-color": "#40A2E3",
+        "secondary-color": "#FFF6E9",
+        "tertiary-color": "#BBE2EC",
+        "quaternary-color": "#0D9276",
       },
       fontFamily: {
         "noto-sans-jp": ["Noto Sans JP", "Poppins", "sans-serif"],

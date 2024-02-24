@@ -1,24 +1,24 @@
 import PaymentAreaChart from "./AreaChart/AreaChart";
 import PaymentBarchart from "./BarChart/Barchart";
-import PaymentLinceChart from "./LineChart/LinceChart";
+import PaymenWeekBarChart from "./BarChart/PaymentWeekBarChart";
 import PaymentPieChart from "./PieChart/PieChart";
+import LimitValPieChart from "./PieChart/LimitValPieChart";
 const Charts = () => {
   return (
     <div className="grid grid-cols-2 gap-5">
-      <div className="grid grid-cols-2 bg-green-400">
+      <div className="border-tertiary-color grid grid-cols-2 rounded-sm border-2  bg-white p-3">
         <PaymentPieChart />
-        <PaymentPieChart />
+        <LimitValPieChart />
       </div>
-      <div className=" bg-green-400">
+      <div className="border-tertiary-color grid  rounded-sm border-2  bg-white p-3">
         <PaymentBarchart />
       </div>
-      <div className="col-span-2 bg-green-400">
+      <div className="border-tertiary-color col-span-2 rounded-sm border-2  bg-white p-3">
+        <PaymenWeekBarChart />
+      </div>
+      <div className="border-tertiary-color col-span-2 rounded-sm border-2  bg-white p-3">
         <PaymentAreaChart />
       </div>
-      {/* <div className="bg-green-400">
-        <PaymentLinceChart />
-        <PaymentLinceChart />
-      </div> */}
     </div>
   );
 };

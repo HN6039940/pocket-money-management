@@ -48,16 +48,20 @@ const IncomeInputForm = () => {
   };
 
   return (
-    <div className=" min-w-60 max-w-2xl rounded-sm bg-yellow-400 p-3">
-      <form action="" onSubmit={handleSubmit(onSubmit)}>
+    <div className=" bg-tertiary-color border-primary-color   w-1/2 min-w-60  max-w-2xl flex-col gap-4 rounded-md border-2 p-3">
+      <form
+        action=""
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <div>
-          <label htmlFor="income" className="">
+          <label htmlFor="income" className=" text-lg">
             収入
           </label>
           <input
             type="number"
             id="income"
-            className="min-h-10  w-full rounded-sm"
+            className="min-h-10  w-full rounded-sm border-2 border-gray-400"
             {...register("income", {
               required: "収入を入力してください",
             })}
@@ -67,7 +71,7 @@ const IncomeInputForm = () => {
           )}
         </div>
         <div>
-          <label htmlFor="income" className="">
+          <label htmlFor="income" className="text-lg">
             日付
           </label>
           <input
@@ -83,7 +87,13 @@ const IncomeInputForm = () => {
             <p className="text-sm text-red-500">{errors.date.message}</p>
           )}
         </div>
-        <input type="submit" value="送信する" />
+        <div className=" text-center">
+          <input
+            className="bg-primary-color inline-block cursor-pointer  rounded-sm border-2  p-3  text-white"
+            type="submit"
+            value="送信する"
+          />
+        </div>
       </form>
     </div>
   );

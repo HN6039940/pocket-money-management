@@ -25,18 +25,12 @@ type argumentData = {
   expense: ExpenseDataObject[];
 };
 
-type ChartObject = {
-  date: string;
-  value: number;
-};
+type ChartObject = { date: string; incomeValue: number; expenseValue: number };
 
 type ChartState = {
-  AreaChart: { date: string; incomeValue: number; expenseValue: number }[];
+  AreaChart: ChartObject[];
+  BarChart: ChartObject[];
   LabelBarChart: { label: string; value: number; quantity: number }[];
-  BarChart: {
-    name: string;
-    data: ChartObject[];
-  }[];
   PieChart: {
     name: string;
     value: number;
@@ -77,7 +71,7 @@ const chartsSlice = createSlice({
       const filteredLabel = filterLabelByBarChart(payload);
       state.LabelBarChart = sortQuantity(filteredLabel);
     },
-    createLineChart: (state, action: PayloadAction<argumentData>) => {
+    createBarChart: (state, action: PayloadAction<argumentData>) => {
       const { incomes, expense } = action.payload;
       const array = createDaysAgoArray(7);
       const filteredIncome = filterMonthByBarChart(incomes, array);
@@ -89,11 +83,7 @@ const chartsSlice = createSlice({
           expenseValue: filteredExpense[index].value,
         };
       });
-      console.log(concatChartData);
-      state.BarChart = [
-        { name: "収入", data: filteredIncome },
-        { name: "支出", data: filteredExpense },
-      ];
+      state.BarChart = concatChartData;
     },
     createPieChart: (state, action: PayloadAction<argumentData>) => {
       const { incomes, expense } = action.payload;
@@ -123,7 +113,7 @@ const chartsSlice = createSlice({
 export default chartsSlice.reducer;
 export const {
   createPieChart,
-  createLineChart,
+  createBarChart,
   createAreaChart,
   createLabelBarChart,
 } = chartsSlice.actions;

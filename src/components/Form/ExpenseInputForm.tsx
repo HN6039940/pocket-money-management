@@ -56,10 +56,16 @@ const ExpenseInputForm = () => {
   };
 
   return (
-    <div className=" min-w-60 max-w-2xl rounded-sm bg-yellow-400 p-3">
-      <form action="" onSubmit={handleSubmit(onSubmit)}>
+    <div className=" bg-quaternary-color  w-1/2 min-w-60 max-w-2xl rounded-md border-2 border-black p-3 ">
+      <form
+        action=""
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <div>
-          <label htmlFor="expense">支出</label>
+          <label htmlFor="expense" className="text-lg">
+            支出
+          </label>
           <input
             type="number"
             id="expense"
@@ -73,7 +79,9 @@ const ExpenseInputForm = () => {
           )}
         </div>
         <div>
-          <label htmlFor="expense">日付</label>
+          <label htmlFor="expense" className="text-lg">
+            日付
+          </label>
           <input
             type="date"
             id="expense"
@@ -88,7 +96,9 @@ const ExpenseInputForm = () => {
           )}
         </div>
         <div>
-          <label htmlFor="expense">種類</label>
+          <label htmlFor="expense" className="text-lg">
+            種類
+          </label>
           <input
             type="text"
             id="expense"
@@ -102,7 +112,13 @@ const ExpenseInputForm = () => {
             <p className="text-sm text-red-500">{errors.label.message}</p>
           )}
         </div>
-        <input type="submit" value="送信する" />
+        <div className="text-center">
+          <input
+            className=" border-primary-color bg-primary-color inline-block cursor-pointer rounded-sm border-2 p-3 text-white"
+            type="submit"
+            value="送信する"
+          />
+        </div>
       </form>
     </div>
   );

@@ -11,7 +11,7 @@ const SignOutBtn = () => {
         })
       }
     >
-      Sign Out
+      サインアウト
     </button>
   );
 };

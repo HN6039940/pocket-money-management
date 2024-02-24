@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   ResponsiveContainer,
   PieChart,
@@ -7,25 +6,18 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
+import { useAppSelector } from "../../../store/slice/Hooks/hooks";
 import { createSelector } from "reselect";
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../../store/slice/Hooks/hooks";
 import { RootState } from "../../../store/store";
-import { createPieChart } from "../../../store/slice/chartSlice";
-const PaymentPieChart = () => {
-  const dispatch = useAppDispatch();
-  const selectGraph = (state: RootState) => state.charts;
-
-  const selectPieChart = createSelector(selectGraph, (state) => state.PieChart);
-  const pieChartData = useAppSelector(selectPieChart);
-  const { incomes, expense } = useAppSelector((state) => state.finance);
-
-  useEffect(() => {
-    dispatch(createPieChart({ incomes, expense }));
-  }, [incomes, expense, dispatch]);
-
+const LimitValPieChart = () => {
+  const chartSelector = (state: RootState) => state.charts;
+  const selectPieChart = createSelector(
+    chartSelector,
+    (state) => state.PieChart,
+  );
+  const limit = 100000;
+  const [_, expenseData] = useAppSelector(selectPieChart);
+  console.log(expenseData);
   return (
     <div>
       <h2 className="mb-5 text-3xl font-bold">PieChart</h2>
@@ -44,14 +36,17 @@ const PaymentPieChart = () => {
           <Pie
             dataKey="value"
             isAnimationActive={true}
-            data={pieChartData}
+            data={[
+              expenseData,
+              { name: "残り", value: limit - expenseData?.value },
+            ]}
             cx="50%"
             cy="50%"
             outerRadius={85}
-            fill="#8884d8"
             label
           >
-            <Cell fill="#82ca9d" />
+            <Cell fill="#009c60" />
+            <Cell fill="#912191" />
           </Pie>
         </PieChart>
       </ResponsiveContainer>
@@ -59,4 +54,4 @@ const PaymentPieChart = () => {
   );
 };
 
-export default PaymentPieChart;
+export default LimitValPieChart;
