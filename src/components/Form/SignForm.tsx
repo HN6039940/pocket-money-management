@@ -59,17 +59,17 @@ const SignForm = ({ kind }: SignFormProps) => {
 
   return (
     <>
-      <div className="mx-auto min-w-64 max-w-md">
-        <div className=" mt-20  rounded-sm border-2 border-charcoal-primary bg-orange-primary py-3 text-center font-bold ">
+      <div className="mx-auto min-w-64 max-w-md px-2">
+        <div className=" mt-20  rounded-sm border-2 border-gray-800 bg-orange-600 py-3 text-center font-bold text-white transition-all duration-300 hover:bg-orange-700 ">
           <button className=" inline-block h-full w-full">{`Googleで${kind === "login" ? "ログイン" : "サインアップ"}`}</button>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="
-         mt-4  flex  flex-col gap-3
-      rounded-md border-t-2 border-charcoal-primary bg-stone-300 p-5 shadow-md"
+         border-charcoal-primary  mt-4  flex flex-col
+      gap-3 rounded-md border-t-2 bg-tertiary-color p-5 shadow-md"
         >
-          <h2 className="text-center text-xl font-bold">
+          <h2 className="text-center text-lg font-bold">
             メールアドレスで{kind === "login" ? "ログイン" : "サインアップ"}
           </h2>
           <div className=" flex flex-col gap-2  pt-3 ">
@@ -123,7 +123,7 @@ const SignForm = ({ kind }: SignFormProps) => {
           <div className="pt-3 text-center">
             <button
               type="submit"
-              className="rounded-md bg-charcoal-primary p-3 font-bold  text-paleOrange-primary"
+              className=" border-gry-800 rounded-md   border-2 bg-primary-color p-3 font-bold text-white transition-all duration-300 ease-in-out hover:border-primary-color hover:bg-white hover:text-primary-color hover:shadow-lg"
             >
               {kind === "login" ? "ログイン" : "サインアップ"}
             </button>

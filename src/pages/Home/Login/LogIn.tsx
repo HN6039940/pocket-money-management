@@ -1,4 +1,4 @@
-import NavBar from "../../../components/NavBar";
+import NavBar from "../../../components/Navigation/NavBar";
 import SignForm from "../../../components/Form/SignForm";
 const LoginPage = () => {
   return (

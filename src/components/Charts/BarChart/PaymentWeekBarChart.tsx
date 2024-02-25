@@ -28,11 +28,15 @@ const PaymentWeekBarChart = () => {
     dispatch(createBarChart({ expense, incomes }));
   }, [expense, incomes, dispatch]);
 
-  console.log(lineBarData);
-
   return (
     <div>
-      <h2 className="mb-5 text-3xl font-bold">Payment</h2>
+      <h2 className="mb-5 text-3xl font-bold">
+        週別収支比率
+        <br />
+        <p className="text-sm">{`${lineBarData[0]?.date} ~ ${
+          lineBarData[lineBarData.length - 1]?.date
+        }`}</p>
+      </h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={lineBarData}
@@ -43,8 +47,8 @@ const PaymentWeekBarChart = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="incomeValue" fill="#8884d8" name={"収入"} />
-          <Bar dataKey="expenseValue" fill="#82ca9d" name={"支出"} />
+          <Bar dataKey="incomeValue" fill="#40A2E3" name={"収入"} />
+          <Bar dataKey="expenseValue" fill="#dd8015" name={"支出"} />
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -1,13 +1,13 @@
-import SignOutBtn from "./Btn/SignOutBtn";
+import SignOutBtn from "../Btn/SignOutBtn";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <div className="bg-primary-color navbar">
+    <div className="navbar bg-primary-color">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
-      <div className="flex-none">
+      <div className="invisible hidden flex-none md:visible md:block">
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link to="dashboard" className=" text-md  font-noto-sans-jp">

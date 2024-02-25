@@ -1,9 +1,9 @@
 import SignBtn from "../../components/Btn/SignBtn";
-import NavBar from "../../components/NavBar";
+import NavBar from "../../components/Navigation/NavBar";
 
 const TopPage = () => {
   return (
-    <section className="min-h-dvh">
+    <section className="min-h-dvh ">
       <NavBar />
       <div className=" container mx-auto">
         <div className=" mt-10 px-3 py-3">
@@ -15,34 +15,41 @@ const TopPage = () => {
           <div className=" mt-5 flex justify-center gap-2">
             <SignBtn
               kind="signup"
-              className="rounded-md bg-charcoal-primary p-3 font-bold  text-white"
+              className="rounded-md bg-gray-800 p-3 font-bold  text-white
+              transition-all duration-300 ease-in-out hover:border-gray-800 hover:bg-gray-600  hover:shadow-lg
+              "
             >
               新規登録
             </SignBtn>
             <SignBtn
               kind="login"
-              className=" rounded-md bg-slate-100 p-3 font-bold  text-charcoal-primary"
+              className="rounded-md border-2 bg-primary-color p-3  font-bold
+              text-white transition-all duration-300 ease-in-out hover:border-primary-color hover:bg-white
+              hover:text-primary-color hover:shadow-lg 
+              "
             >
               ログイン
             </SignBtn>
           </div>
         </div>
         <div className="mt-8 px-3 py-3">
-          <h2 className="text-center text-lg font-semibold text-charcoal-primary">
+          <h2 className="text-charcoal-primary text-center text-lg font-semibold">
             このアプリについて
           </h2>
           <p className="mt-3 text-center text-base text-slate-700">
-            このアプリは予算管理をサポートし、より豊かな生活を実現するためのツールです。
+            このアプリはお小遣いの管理をサポートし、貴方がどのくらい
+            お金を使っているかを把握し、より豊かな生活を
+            実現するためのツールです。
           </p>
         </div>
         <div className="mt-8 px-3 py-3">
-          <h2 className="text-center text-lg font-semibold text-charcoal-primary">
+          <h2 className="text-charcoal-primary text-center text-lg font-semibold">
             アプリの特徴
           </h2>
           <ul className="mt-3 text-center text-base text-slate-700">
-            <li>簡単に予算を設定・管理できます</li>
-            <li>支出をカテゴリ別に分析できます</li>
-            <li>予算超過を防ぐための通知機能があります</li>
+            <li>収入と支出を記録できます</li>
+            <li>記録したデータをグラフで確認できます</li>
+            <li>支出をカテゴリ別に分類できます</li>
           </ul>
         </div>
       </div>

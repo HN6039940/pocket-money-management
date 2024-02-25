@@ -32,7 +32,12 @@ const PaymentAreaChart = () => {
   console.log(areaChartData);
   return (
     <div>
-      <h2 className=" mb-5 text-3xl font-bold">AreaChart</h2>
+      <h2 className=" mb-5 text-3xl font-bold">
+        月別収支推移
+        <p className="text-sm ">
+          {`${areaChartData[0]?.date} ~ ${areaChartData[areaChartData.length - 1]?.date}`}
+        </p>
+      </h2>
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart
           width={500}
@@ -54,16 +59,16 @@ const PaymentAreaChart = () => {
             type="monotone"
             dataKey="incomeValue"
             stackId="1"
-            stroke="#0000008d"
-            fill="#f73939e3"
+            stroke="#03ffff"
+            fill="#0099ff"
             name="収入"
           />
           <Area
             type="monotone"
             dataKey="expenseValue"
-            stackId="2"
-            stroke="#000000a0"
-            fill="#3344dbdd"
+            stackId="1"
+            stroke="#ffc402"
+            fill="#dd8015"
             name="支出"
           />
         </AreaChart>

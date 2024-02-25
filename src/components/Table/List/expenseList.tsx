@@ -18,9 +18,14 @@ const ExpenseList = (props: ExpensesItem) => {
       <li className="flex-grow text-xl">{formatDate}</li>
       <li className=" flex-grow text-xl">{amount}円</li>
       <li className="flex-grow text-xl">{label}</li>
-      <button className="block p-4 text-xl" onClick={handleCLick}>
-        delete
-      </button>
+      <div className="text-center">
+        <button
+          className="inline-block rounded-md bg-gray-800 px-4 py-2 text-xl text-white"
+          onClick={handleCLick}
+        >
+          delete
+        </button>
+      </div>
     </div>
   );
 };

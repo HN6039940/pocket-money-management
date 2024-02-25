@@ -14,9 +14,14 @@ const IncomeList = (props: IncomesItem) => {
     <div className="  border-gray grid grid-cols-3 items-center border-b-2 p-2">
       <li className=" flex-grow text-xl">{formatDate}</li>
       <li className="flex-grow text-xl">{amount}円</li>
-      <button className="block p-4 text-xl" onClick={handleCLick}>
-        delete
-      </button>
+      <div className="text-center">
+        <button
+          className="border-whiter inline-block rounded-md border  bg-gray-800 px-4 py-2 text-xl text-white"
+          onClick={handleCLick}
+        >
+          delete
+        </button>
+      </div>
     </div>
   );
 };

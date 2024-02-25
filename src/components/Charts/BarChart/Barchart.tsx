@@ -36,7 +36,7 @@ const PaymentBarchart = () => {
 
   return (
     <div>
-      <h2 className="mb-5 text-3xl font-bold">BarChart</h2>
+      <h2 className="mb-5 text-3xl font-bold">タグ別比率</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={barChartData} layout="vertical" className=" mt-5">
           <CartesianGrid strokeDasharray="3 3" />
@@ -46,7 +46,7 @@ const PaymentBarchart = () => {
           <YAxis type="category" dataKey="label" />
           <Bar
             dataKey="quantity"
-            fill="#61c271"
+            fill="#0D9276"
             name={"タグ数"}
             radius={[5, 5, 0, 0]}
             barSize={50}

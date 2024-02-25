@@ -6,16 +6,16 @@ const Table = () => {
   const { expense, incomes } = useAppSelector((state) => state.finance);
   return (
     <section className="grid grid-cols-2 gap-7 ">
-      <div className="border-primary-color rounded-sm border-2 bg-white p-3 shadow-sm">
-        <h2 className=" py-3 text-3xl">収入</h2>
+      <div className=" rounded-md border-2 border-primary-color bg-white p-3 ">
+        <h2 className=" py-3 text-3xl font-bold text-primary-color">収入</h2>
         <ul className="">
           {incomes.map((income) => (
             <IncomeList key={income.id} {...income} />
           ))}
         </ul>
       </div>
-      <div className="border-primary-color rounded-sm border-2 bg-white p-3 shadow-sm">
-        <h2 className="py-3 text-3xl">支出</h2>
+      <div className="rounded-md border-2 border-orange-500 bg-white p-3 shadow-sm">
+        <h2 className="py-3 text-3xl font-bold text-orange-500">支出</h2>
         <ul>
           {expense.map((expense) => (
             <ExpenseList key={expense.id} {...expense} />

@@ -28,17 +28,23 @@ const PaymentPieChart = () => {
 
   return (
     <div>
-      <h2 className="mb-5 text-3xl font-bold">PieChart</h2>
+      <h2 className="mb-3 text-3xl font-bold">
+        今月の収支の内訳
+        <p className="space-y-2 text-sm text-gray-700">
+          {`${pieChartData[0]?.beginMonth} ~ ${pieChartData[0]?.endMonth}`}
+        </p>
+      </h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart width={400} height={400}>
           <Legend />
           <Tooltip
             animationDuration={2000}
             contentStyle={{
-              backgroundColor: "#d797fc",
-              border: "1px solid #e5e7eb",
+              backgroundColor: "#faf4fd",
+              border: "1px solid #000000",
               borderRadius: "5px",
               padding: "20px",
+              color: "#1e1e1f",
             }}
           />
           <Pie
@@ -48,10 +54,10 @@ const PaymentPieChart = () => {
             cx="50%"
             cy="50%"
             outerRadius={85}
-            fill="#8884d8"
+            fill="#dd8015"
             label
           >
-            <Cell fill="#82ca9d" />
+            <Cell fill="#40A2E3" />
           </Pie>
         </PieChart>
       </ResponsiveContainer>

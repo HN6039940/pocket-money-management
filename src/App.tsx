@@ -47,7 +47,6 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
         dispatch(
           setUserInfo({
             name: user.displayName || user.email!,

@@ -20,17 +20,22 @@ const LimitValPieChart = () => {
   console.log(expenseData);
   return (
     <div>
-      <h2 className="mb-5 text-3xl font-bold">PieChart</h2>
+      <h2 className="mb-5 text-3xl font-bold">
+        限度額と支出の比率
+        <br />
+        <p className="text-sm">{`${expenseData?.beginMonth} ~ ${expenseData?.endMonth}`}</p>
+      </h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart width={400} height={400}>
           <Legend />
           <Tooltip
             animationDuration={2000}
             contentStyle={{
-              backgroundColor: "#d797fc",
-              border: "1px solid #e5e7eb",
+              backgroundColor: "#faf4fd",
+              border: "1px solid #000000",
               borderRadius: "5px",
               padding: "20px",
+              color: "#1e1e1f",
             }}
           />
           <Pie
@@ -45,7 +50,7 @@ const LimitValPieChart = () => {
             outerRadius={85}
             label
           >
-            <Cell fill="#009c60" />
+            <Cell fill="#dd8015" />
             <Cell fill="#912191" />
           </Pie>
         </PieChart>

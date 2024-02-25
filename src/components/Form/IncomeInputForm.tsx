@@ -48,7 +48,7 @@ const IncomeInputForm = () => {
   };
 
   return (
-    <div className=" bg-tertiary-color border-primary-color   w-1/2 min-w-60  max-w-2xl flex-col gap-4 rounded-md border-2 p-3">
+    <div className=" w-1/2 min-w-60   max-w-2xl flex-col  gap-4 rounded-md border-2 border-primary-color bg-tertiary-color p-3">
       <form
         action=""
         onSubmit={handleSubmit(onSubmit)}
@@ -67,7 +67,9 @@ const IncomeInputForm = () => {
             })}
           />
           {errors.income && (
-            <p className="text-sm text-red-500">{errors.income.message}</p>
+            <p className="text-sm font-bold text-red-500">
+              {errors.income.message}
+            </p>
           )}
         </div>
         <div>
@@ -84,14 +86,16 @@ const IncomeInputForm = () => {
             })}
           />
           {errors.date && (
-            <p className="text-sm text-red-500">{errors.date.message}</p>
+            <p className="text-sm font-bold  text-red-500">
+              {errors.date.message}
+            </p>
           )}
         </div>
         <div className=" text-center">
           <input
-            className="bg-primary-color inline-block cursor-pointer  rounded-sm border-2  p-3  text-white"
+            className="hover:bg-primary-dark-color inline-block cursor-pointer  rounded-sm  border-2 border-gray-700 bg-primary-color  p-3 font-bold text-gray-800 transition-all duration-300 ease-in-out hover:text-white"
             type="submit"
-            value="送信する"
+            value="記録する"
           />
         </div>
       </form>
