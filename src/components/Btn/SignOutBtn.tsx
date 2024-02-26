@@ -1,7 +1,10 @@
 import { logOutUser } from "../../firebase/auth/fireauth-config";
 import { useNavigate } from "react-router-dom";
+import { ComponentPropsWithoutRef } from "react";
 
-const SignOutBtn = () => {
+type SignOutBtnProps = ComponentPropsWithoutRef<"button">;
+
+const SignOutBtn = (props: SignOutBtnProps) => {
   const navigate = useNavigate();
   return (
     <button
@@ -10,6 +13,7 @@ const SignOutBtn = () => {
           navigate("/");
         })
       }
+      {...props}
     >
       サインアウト
     </button>
