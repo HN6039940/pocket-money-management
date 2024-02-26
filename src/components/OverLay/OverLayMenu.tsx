@@ -16,8 +16,8 @@ const OverLayMenu = (props: OverLayMenuProps) => {
   return (
     <section
       onClick={handleClose}
-      className={`  ${isOpen ? "block" : "invisible hidden"} absolute left-0 top-0 flex min-h-dvh min-w-full flex-col items-center  justify-center bg-primary-color opacity-95 transition-all duration-300
-      ease-in-out md:invisible md:hidden`}
+      className={`  ${isOpen ? "block" : "invisible hidden"}  fixed left-0 top-0 z-50 flex min-h-dvh min-w-full  flex-col items-center justify-center bg-primary-color opacity-95
+      transition-all duration-300 ease-in-out md:invisible md:hidden `}
     >
       <span
         onClick={handleClose}

@@ -44,7 +44,9 @@ const User = () => {
       <NavBar />
       <section className="container mx-auto min-h-dvh px-5">
         <div className="border-b-2 border-black py-5">
-          <h1 className=" mt-16 font-noto-sans-jp text-5xl">ようこそ {name}</h1>
+          <h1 className=" md:mt-15 mt-8  font-noto-sans-jp text-xl sm:mt-10 sm:text-3xl md:text-5xl">
+            ようこそ {name}
+          </h1>
           <MenuBar />
         </div>
         <Outlet />

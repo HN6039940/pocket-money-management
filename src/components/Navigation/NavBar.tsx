@@ -1,9 +1,12 @@
+import { useState } from "react";
+import { useAppSelector } from "../../store/slice/Hooks/hooks";
 import NavMenu from "./NavMenu";
 import HamburgerMenu from "./HamburgerMenu";
 import OverLayMenu from "../OverLay/OverLayMenu";
-import { useState } from "react";
+import SignBtn from "../Btn/SignBtn";
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const { isLogin } = useAppSelector((state) => state.auth);
   const handleCloseMenu = () => {
     setIsMenuOpen(false);
   };
@@ -18,7 +21,18 @@ const NavBar = () => {
         }}
       />
       <OverLayMenu handleClose={handleCloseMenu} isOpen={isMenuOpen} />
-      <NavMenu />
+      {isLogin ? (
+        <NavMenu />
+      ) : (
+        <>
+          <SignBtn kind="signup" className="btn btn-ghost">
+            新規登録
+          </SignBtn>
+          <SignBtn kind="login" className="btn btn-ghost">
+            ログイン
+          </SignBtn>
+        </>
+      )}
     </div>
   );
 };

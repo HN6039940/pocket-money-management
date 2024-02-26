@@ -11,12 +11,16 @@ const IncomeList = (props: IncomesItem) => {
     await deleteFinanceData({ id, amount, date: dateobj, useruid });
   };
   return (
-    <div className="  border-gray grid grid-cols-3 items-center border-b-2 p-2">
-      <li className=" flex-grow text-xl">{formatDate}</li>
-      <li className="flex-grow text-xl">{amount}円</li>
+    <div className="  border-gray grid grid-cols-2 grid-rows-2 items-center border-b-2 p-1 lg:grid-cols-3 lg:grid-rows-1 ">
+      <li className=" sm:text-md col-span-2 flex-grow text-sm md:text-lg lg:col-span-1 lg:text-xl">
+        {formatDate}
+      </li>
+      <li className="sm:text-md flex-grow text-sm md:text-lg lg:text-xl">
+        {amount}円
+      </li>
       <div className="text-center">
         <button
-          className="border-whiter inline-block rounded-md border  bg-gray-800 px-4 py-2 text-xl text-white"
+          className="border-whiter inline-block rounded-md border  bg-gray-800 px-2 py-1 text-sm text-white lg:px-3 lg:py-2 lg:text-xl"
           onClick={handleCLick}
         >
           delete

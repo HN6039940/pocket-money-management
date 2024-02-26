@@ -14,13 +14,17 @@ const ExpenseList = (props: ExpensesItem) => {
   };
 
   return (
-    <div className="border-gray grid grid-cols-4 items-center border-b-2 p-2 ">
-      <li className="flex-grow text-xl">{formatDate}</li>
-      <li className=" flex-grow text-xl">{amount}円</li>
-      <li className="flex-grow text-xl">{label}</li>
-      <div className="text-center">
+    <div className="border-gray grid grid-cols-2 items-center justify-center gap-3 border-b-2 p-1 lg:grid-cols-4">
+      <li className="sm:text-md flex-grow text-sm md:text-lg  lg:text-xl">
+        {formatDate}
+      </li>
+      <li className=" flex-grow text-sm sm:text-base md:text-lg  ">
+        {amount}円
+      </li>
+      <li className="flex-grow text-sm sm:text-base md:text-lg ">{label}</li>
+      <div className=" text-center">
         <button
-          className="inline-block rounded-md bg-gray-800 px-4 py-2 text-xl text-white"
+          className="inline-block rounded-md  bg-gray-800 px-2 py-1 text-sm   text-white md:text-lg lg:px-3 lg:py-2"
           onClick={handleCLick}
         >
           delete
