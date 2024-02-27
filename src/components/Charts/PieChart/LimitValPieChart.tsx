@@ -17,7 +17,6 @@ const LimitValPieChart = () => {
   );
   const limit = 100000;
   const [_, expenseData] = useAppSelector(selectPieChart);
-  console.log(expenseData);
   return (
     <div>
       <h2 className="mb-5 text-3xl font-bold">

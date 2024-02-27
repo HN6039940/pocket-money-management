@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store/slice/Hooks/hooks";
 import { setUserInfo } from "../../store/slice/userAuthSclice";
+
 import {
   signupEmailUser,
   logInEmailUser,
@@ -9,7 +11,8 @@ import {
   createNewDocument,
   createUserDoc,
 } from "../../firebase/firestore/firestore-financeData-operations";
-import { useNavigate } from "react-router-dom";
+
+import GoogleSignBtn from "../Btn/GoogleSignBtn";
 
 type SignInput = {
   email: string;
@@ -35,17 +38,22 @@ const SignForm = ({ kind }: SignFormProps) => {
     try {
       if (kind === "login") {
         const { uid, email } = await logInEmailUser(data.email, data.password);
+
         dispatch(
           setUserInfo({ isLogin: true, email: email!, id: uid, name: email! }),
         );
+
         redirect("/user");
       } else {
         const { uid, email } = await signupEmailUser(data.email, data.password);
+
         await createUserDoc(uid, email!, true);
         await createNewDocument(uid);
+
         dispatch(
           setUserInfo({ isLogin: true, email: email!, id: uid, name: email! }),
         );
+
         redirect("/user");
       }
       reset();
@@ -60,9 +68,10 @@ const SignForm = ({ kind }: SignFormProps) => {
   return (
     <>
       <div className="mx-auto min-w-64 max-w-md px-2">
-        <div className=" mt-20  rounded-sm border-2 border-gray-800 bg-orange-600 py-3 text-center font-bold text-white transition-all duration-300 hover:bg-orange-700 ">
-          <button className=" inline-block h-full w-full">{`Googleで${kind === "login" ? "ログイン" : "サインアップ"}`}</button>
-        </div>
+        <GoogleSignBtn
+          kind={kind}
+          className=" mt-20  rounded-sm border-2 border-gray-800 bg-orange-600 py-3 text-center font-bold text-white transition-all duration-300 hover:bg-orange-700 "
+        />
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="

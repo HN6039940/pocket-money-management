@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Timestamp } from "firebase/firestore";
-// import app from "../../firebase/firestore/firestore-config";
-// import { getFirestore, collection, doc, getDocs } from "firebase/firestore";
 
 export type IncomesItem = {
   id: string;

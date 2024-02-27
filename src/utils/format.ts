@@ -8,8 +8,8 @@ export const formattedDateByja = (date: string | Date): string => {
     });
   }
 
-  const isodate = new Date(date);
-  const formattedDate = isodate.toLocaleDateString("ja-JP", {
+  const ISOdate = new Date(date);
+  const formattedDate = ISOdate.toLocaleDateString("ja-JP", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",

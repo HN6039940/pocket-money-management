@@ -4,12 +4,6 @@ import {
   ExpenseDataObject,
 } from "../store/slice/chartSlice";
 
-// const isExpense = (
-//   data: IncomeDataObject[] | ExpenseDataObject[],
-// ): data is ExpenseDataObject[] => {
-//   return "label" in data[0];
-// };
-
 // 日付が月頭から月末まで特定の期間内に存在するか
 export const filterMonthByPieChart = (
   data: IncomeDataObject[] | ExpenseDataObject[],
@@ -78,21 +72,6 @@ export const filterMonthByBarChart = (
     .reverse();
 
   return result;
-
-  // const reducedData = data.reduce<{ [date: string]: number }>((acc, cur) => {
-  //   const formattedDate = formattedDateByja(cur.date as string);
-  //   if (targetSetDate.has(formattedDate)) {
-  //     acc[formattedDate] = (acc[formattedDate] || 0) + cur.amount;
-  //   }
-  //   return acc;
-  // }, {});
-
-  // return Array.from(targetSetDate)
-  //   .map((date) => ({
-  //     value: reducedData[date] || 0,
-  //     date,
-  //   }))
-  //   .reverse();
 };
 
 // エリアチャート
@@ -103,7 +82,7 @@ export const filterMonthByAreaChart = (
 ) => {
   const thisYear = new Date(formattedDateByja(new Date())).getFullYear();
 
-  const ManthArray = Array.from({ length: 12 }, (_, i) => {
+  const MonthArray = Array.from({ length: 12 }, (_, i) => {
     return {
       date: `${thisYear}-${(i + 1).toString().padStart(2, "0")}`,
       value: 0,
@@ -117,6 +96,7 @@ export const filterMonthByAreaChart = (
     const formattedDate = formattedDateByja(cur.date as string);
     const month = new Date(formattedDate).getMonth() + 1; // getMonthは0から始まるため、1を加える
     const key = `${thisYear}-${month.toString().padStart(2, "0")}`; // キーは "年-月" 形式
+
     // keyを元に、同じ月のデータ群でまとめる
     // データの形式は{date: "年-月", value: 金額}として、配列に追加する
     if (key in acc) {
@@ -128,7 +108,7 @@ export const filterMonthByAreaChart = (
     return acc;
   }, {});
 
-  const result = ManthArray.map((item) => {
+  const result = MonthArray.map((item) => {
     if (Object.keys(reducedData).includes(item.date)) {
       return { date: item.date, value: reducedData[item.date].value };
     }

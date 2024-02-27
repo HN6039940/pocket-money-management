@@ -1,5 +1,6 @@
 import ExpenceInputForm from "../../../components/Form/IncomeInputForm";
 import IncomeInputForm from "../../../components/Form/ExpenseInputForm";
+
 const Transactions = () => {
   return (
     <section className=" mt-5 rounded-md border-2  border-primary-color bg-white">

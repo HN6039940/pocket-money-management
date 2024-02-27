@@ -1,5 +1,6 @@
-import SignOutBtn from "../Btn/SignOutBtn";
 import { Link } from "react-router-dom";
+
+import SignOutBtn from "../Btn/SignOutBtn";
 
 const IsSignInMenu = () => {
   return (

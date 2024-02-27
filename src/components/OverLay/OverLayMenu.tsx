@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef } from "react";
 import { useAppSelector } from "../../store/slice/Hooks/hooks";
+
 import IsSignInMenu from "./IsSignInMenu";
 import SignBtn from "../Btn/SignBtn";
 
@@ -12,7 +13,6 @@ const OverLayMenu = (props: OverLayMenuProps) => {
   const isLogin = useAppSelector((state) => state.auth.isLogin);
 
   const { isOpen, handleClose } = props;
-  console.log(isOpen);
   return (
     <section
       onClick={handleClose}

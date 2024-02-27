@@ -1,4 +1,5 @@
 import Charts from "../../../components/Charts/Charts";
+
 const DashBoard = () => {
   return (
     <section className=" ">

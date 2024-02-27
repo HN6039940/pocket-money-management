@@ -1,6 +1,6 @@
-import { logOutUser } from "../../firebase/auth/fireauth-config";
-import { useNavigate } from "react-router-dom";
 import { ComponentPropsWithoutRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { logOutUser } from "../../firebase/auth/fireauth-config";
 
 type SignOutBtnProps = ComponentPropsWithoutRef<"button">;
 

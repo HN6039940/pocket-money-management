@@ -1,4 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { Timestamp } from "firebase/firestore";
+
 import { getBeginAndEndOfMonth, createDaysAgoArray } from "../../utils/date";
 import {
   filterMonthByPieChart,
@@ -8,7 +10,6 @@ import {
   filterLabelByBarChart,
 } from "../../utils/filter";
 import { sortQuantity } from "../../utils/sort";
-import { Timestamp } from "firebase/firestore";
 
 export type IncomeDataObject = {
   amount: number;
@@ -27,16 +28,20 @@ type argumentData = {
 
 type ChartObject = { date: string; incomeValue: number; expenseValue: number };
 
+type LabelBarChartObject = { label: string; value: number; quantity: number };
+
+type PieChartObject = {
+  name: string;
+  value: number;
+  beginMonth: string;
+  endMonth: string;
+};
+
 type ChartState = {
   AreaChart: ChartObject[];
   BarChart: ChartObject[];
-  LabelBarChart: { label: string; value: number; quantity: number }[];
-  PieChart: {
-    name: string;
-    value: number;
-    beginMonth: string;
-    endMonth: string;
-  }[];
+  LabelBarChart: LabelBarChartObject[];
+  PieChart: PieChartObject[];
 };
 
 const initialState: ChartState = {
@@ -54,6 +59,8 @@ const chartsSlice = createSlice({
       const { incomes, expense } = action.payload;
       const filteredIncome = filterMonthByAreaChart(incomes);
       const filteredExpense = filterMonthByAreaChart(expense);
+
+      // filteredIncome filteredExpenseはどちらも必ずデータ長は同じなので、どちらかのデータを基準にしても良い
       const concatChartData = filteredIncome.map((item, index) => {
         return {
           date: item.date,
@@ -63,6 +70,7 @@ const chartsSlice = createSlice({
       });
       state.AreaChart = concatChartData;
     },
+
     createLabelBarChart: (
       state,
       action: PayloadAction<ExpenseDataObject[]>,
@@ -71,11 +79,16 @@ const chartsSlice = createSlice({
       const filteredLabel = filterLabelByBarChart(payload);
       state.LabelBarChart = sortQuantity(filteredLabel);
     },
+
     createBarChart: (state, action: PayloadAction<argumentData>) => {
       const { incomes, expense } = action.payload;
+
+      // 今日から7日分の日付を遡って取得する
       const array = createDaysAgoArray(7);
       const filteredIncome = filterMonthByBarChart(incomes, array);
       const filteredExpense = filterMonthByBarChart(expense, array);
+
+      // filteredIncome filteredExpenseはどちらも必ずデータ長は同じなので、どちらかのデータを基準にしても良い
       const concatChartData = filteredIncome.map((item, index) => {
         return {
           date: item.date,
@@ -98,6 +111,7 @@ const chartsSlice = createSlice({
         endMonth,
       });
 
+      // ここで収入と支出の合計を求める
       const sumIncome = sumAmount(filteredIncome);
       const sumExpense = sumAmount(filteredExpense);
       const sumData = [

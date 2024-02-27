@@ -2,10 +2,18 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  setPersistence,
+  browserSessionPersistence,
+  signInWithRedirect,
 } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { FirebaseError } from "@firebase/util";
-import { auth, db } from "../firestore/firestore-config";
+
+import { auth, db, googleProvider } from "../firestore/firestore-config";
+import {
+  createUserDoc,
+  createNewDocument,
+} from "../firestore/firestore-financeData-operations";
 
 // type
 export type UserInfo = {
@@ -17,10 +25,53 @@ const isFirebaseError = (error: unknown): error is FirebaseError => {
   return error instanceof FirebaseError;
 };
 
+// Google Sign in
+export const googleSignIn = async () => {
+  try {
+    await signInWithRedirect(auth, googleProvider);
+  } catch (error) {
+    if (isFirebaseError(error)) {
+      throw new Error(error.message);
+    }
+    throw error;
+  }
+};
+
+// Google User create or update user
+
+export const googleUserCreateOrUpdate = async () => {
+  try {
+    await setPersistence(auth, browserSessionPersistence);
+    const userInfo = auth.currentUser;
+    const uid = auth.currentUser?.uid;
+    if (uid) {
+      const userDoc = doc(db, "Users", uid);
+      const userDocSnap = await getDoc(userDoc);
+      if (userDocSnap.exists()) {
+        await updateDoc(userDoc, {
+          isLogin: true,
+        });
+      } else {
+        await createUserDoc(uid, userInfo?.displayName || "No Name", true);
+        await createNewDocument(uid);
+      }
+    } else {
+      throw new Error("ログインしていません");
+    }
+  } catch (error) {
+    if (isFirebaseError(error)) {
+      throw new Error(error.message);
+    }
+    throw error;
+  }
+};
+
 // Create a new user with email and password
 
 export const signupEmailUser = async (email: string, password: string) => {
   try {
+    await setPersistence(auth, browserSessionPersistence);
+
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -30,11 +81,13 @@ export const signupEmailUser = async (email: string, password: string) => {
     return userInfo;
   } catch (error) {
     if (isFirebaseError(error)) {
-      console.log(error.code);
-      console.log(error.message);
       if (error.code === "auth/email-already-exists") {
-        console.log("既に登録されているメールアドレスです");
+        throw new Error("このメールアドレスは既に登録されています");
       }
+      if (error.code === "auth/invalid-email") {
+        throw new Error("メールアドレスが無効です");
+      }
+      throw new Error(error.message);
     }
     throw error;
   }
@@ -44,6 +97,7 @@ export const signupEmailUser = async (email: string, password: string) => {
 
 export const logInEmailUser = async (email: string, password: string) => {
   try {
+    await setPersistence(auth, browserSessionPersistence);
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
@@ -60,8 +114,7 @@ export const logInEmailUser = async (email: string, password: string) => {
     return userInfo;
   } catch (error) {
     if (isFirebaseError(error)) {
-      console.log(error.code);
-      console.log(error.message);
+      throw new Error(error.message);
     }
     throw error;
   }
@@ -80,8 +133,7 @@ export const logOutUser = async () => {
     await signOut(auth);
   } catch (error) {
     if (isFirebaseError(error)) {
-      console.log(error.code);
-      console.log(error.message);
+      throw new Error(error.message);
     }
     throw error;
   }

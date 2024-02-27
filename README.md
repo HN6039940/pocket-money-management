@@ -1,30 +1,80 @@
-# React + TypeScript + Vite
+# サービス概要
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+このアプリは、主に日頃のお小遣いや些細な収入や支出のデータを入力し、
+集計を行いどのくらい利用しているのかをグラフを通して可視化をできるようにしたものです。
+主に今月分や過去7日間分、今年度の月別分などのデータにフォーカスしているため直近の収支の比較に便利です。
 
-Currently, two official plugins are available:
+## 機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ダッシュボード
 
-## Expanding the ESLint configuration
+- 入力画面
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- フィールドテーブル
 
-- Configure the top-level `parserOptions` property like this:
+- ログイン機能
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### ダッシュボード
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+入力した収支がグラフとして反映されます。
+
+月の収支比較
+月の予算と支出比較
+
+支出ごとに設定できるタグ・ラベルがどれほどの数使っているか
+
+今日の日付を基準に7日間別の収支の比較
+
+のグラフが表示されます。
+
+### 入力画面
+
+データを入力する画面です。
+収入と支出の金額、日付、支出は種類というフォームで独自の物を具体的に設定できます。
+（例えば、生活費など）
+
+### テーブル
+
+今まで入力したデータを収支別でみることができます。
+また、削除機能でデータの削除が行えます。
+
+### ログイン機能
+
+Googleまたはメールアドレスを利用して新規登録、ログインができます。
+データを永続的に保持する為にログインは必須です。
+
+---
+
+## 主な使用技術
+
+| フロントエンド   | バックエンド/DB | 認証     |
+| ---------------- | --------------- | -------- |
+| React TypeScript | fireStore       | fireAuth |
+
+- その他使用技術
+
+| Style        | UI      | Source Management | Hosting |
+| ------------ | ------- | ----------------- | ------- |
+| TailWind CSS | deisyUI | Git/GitHub        | netlify |
+
+| library               |
+| --------------------- |
+| redux toolkit         |
+| react-router          |
+| @tanstack react-query |
+| react-hook-form       |
+| zod                   |
+| uuid                  |
+| reselect              |
+
+---
+
+## リリース履歴
+
+2024/02/27 v1 公開
+
+---
+
+## 制作期間
+
+15日 (2024/02/12 ~ 2024/02/27)

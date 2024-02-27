@@ -3,6 +3,7 @@ import PaymentBarchart from "./BarChart/Barchart";
 import PaymenWeekBarChart from "./BarChart/PaymentWeekBarChart";
 import PaymentPieChart from "./PieChart/PieChart";
 import LimitValPieChart from "./PieChart/LimitValPieChart";
+
 const Charts = () => {
   return (
     <div className="space-y-7  lg:grid lg:grid-cols-2 lg:gap-5 lg:space-y-0">

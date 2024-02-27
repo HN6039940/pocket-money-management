@@ -29,7 +29,6 @@ const PaymentAreaChart = () => {
   useEffect(() => {
     dispatch(createAreaChart({ incomes, expense }));
   }, [incomes, expense, dispatch]);
-  console.log(areaChartData);
   return (
     <div>
       <h2 className=" mb-5 text-3xl font-bold">

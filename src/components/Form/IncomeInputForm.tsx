@@ -2,6 +2,7 @@ import { z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { v4 as uuidv4 } from "uuid";
+
 import { useAppSelector } from "../../store/slice/Hooks/hooks";
 import { setFinanceData } from "../../firebase/firestore/firestore-financeData-operations";
 
@@ -38,11 +39,9 @@ const IncomeInputForm = () => {
         id: uuidv4(),
         useruid: id,
       };
-      console.log(submitData);
       await setFinanceData(submitData);
       reset();
     } catch (error) {
-      console.log(error);
       reset();
     }
   };

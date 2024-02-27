@@ -16,9 +16,10 @@ import { RootState } from "../../../store/store";
 import { createPieChart } from "../../../store/slice/chartSlice";
 const PaymentPieChart = () => {
   const dispatch = useAppDispatch();
-  const selectGraph = (state: RootState) => state.charts;
 
+  const selectGraph = (state: RootState) => state.charts;
   const selectPieChart = createSelector(selectGraph, (state) => state.PieChart);
+
   const pieChartData = useAppSelector(selectPieChart);
   const { incomes, expense } = useAppSelector((state) => state.finance);
 

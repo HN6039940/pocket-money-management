@@ -1,4 +1,3 @@
-import { db, auth } from "./firestore-config";
 import {
   doc,
   getDoc,
@@ -8,6 +7,8 @@ import {
   updateDoc,
   onSnapshot,
 } from "firebase/firestore";
+
+import { db, auth } from "./firestore-config";
 
 type FinanceData = {
   expense: {
@@ -59,18 +60,17 @@ export const getDocRef = async (
       };
     } else {
       // doc.data() will be undefined in this case
-      console.log("No such document!");
       return undefined;
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.log("Error getting document:", error);
+      throw new Error("ドキュメントを取得できませんでした");
     }
     return undefined;
   }
 };
 
-// Realtime listener
+// オンスナップショットの設定
 
 export const listenToDoc = (
   callback: (data: FinanceData | undefined) => void,
@@ -86,7 +86,6 @@ export const listenToDoc = (
     (docSnap) => {
       if (docSnap.exists()) {
         const { expense, incomes } = docSnap.data() as FinanceData;
-        console.log(expense, incomes);
         callback({
           expense: expense.map((item) => ({
             ...item,
@@ -98,17 +97,16 @@ export const listenToDoc = (
           })),
         });
       } else {
-        console.log("No such document!");
         callback(undefined);
       }
     },
-    (error) => {
-      console.log("Error getting document:", error);
+    () => {
+      throw new Error("ドキュメントを取得できませんでした");
     },
   );
 };
 
-// create document
+//新規ユーザ作成時のみ新しいドキュメントを作成
 
 export const createNewDocument = async (uid: string) => {
   const docRef = doc(db, `Datas/${uid}`);
@@ -117,13 +115,12 @@ export const createNewDocument = async (uid: string) => {
       expense: [],
       incomes: [],
     });
-    console.log("create new document!");
   } catch (error) {
-    console.error("Error writing document: ", error);
+    throw new Error("ドキュメントを作成できませんでした");
   }
 };
 
-// set update to firestore
+// 支出または収入のデータをフィールドにあるマップアレイに更新する
 export const setFinanceData = async (
   data: submitExpenseData | submitIncomeData,
 ) => {
@@ -134,21 +131,20 @@ export const setFinanceData = async (
       await updateDoc(docRef, {
         expense: arrayUnion({ amount, date, id, label }),
       });
-      console.log("Document successfully written!");
     } else {
       const { amount, date, useruid, id } = data;
       const docRef = doc(db, `Datas/${useruid}`);
       await updateDoc(docRef, {
         incomes: arrayUnion({ amount, date, id }),
       });
-      console.log("Document successfully written!");
     }
   } catch (error) {
-    console.error("Error writing document: ", error);
+    throw new Error("ドキュメントを作成できませんでした");
   }
 };
 
-// delete data from map in array in firestore
+// 支出または収入のデータをフィールドにあるマップアレイから削除する
+// その場合fireStoreはマップアレイの直接削除が行えないので、新しいマップアレイを作成して更新している。
 export const deleteFinanceData = async (
   data: submitExpenseData | submitIncomeData,
 ) => {
@@ -178,6 +174,7 @@ export const deleteFinanceData = async (
 
 // ------ Firestore User Data Operations ------
 
+// 新しいユーザドキュメントを作成
 export const createUserDoc = async (
   uid: string,
   name: string,
@@ -189,8 +186,7 @@ export const createUserDoc = async (
       name,
       isLogin,
     });
-    console.log("Document successfully written!");
   } catch (error) {
-    console.error("Error writing document: ", error);
+    throw new Error("ユーザー情報を作成できませんでした");
   }
 };

@@ -19,6 +19,7 @@ import {
 
 const PaymentBarchart = () => {
   const dispatch = useAppDispatch();
+
   const selectGraph = (state: RootState) => state.charts;
   const selectBarChart = createSelector(
     selectGraph,
@@ -31,8 +32,6 @@ const PaymentBarchart = () => {
   useEffect(() => {
     dispatch(createLabelBarChart(expense));
   }, [expense, dispatch]);
-
-  console.log(barChartData);
 
   return (
     <div>

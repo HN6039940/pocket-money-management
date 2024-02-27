@@ -5,7 +5,7 @@ import chartSlice from "./slice/chartSlice";
 
 const store = configureStore({
   reducer: {
-    // Add your reducers here
+    // reducers
     finance: FinanceSlice,
     auth: AuthSlice,
     charts: chartSlice,

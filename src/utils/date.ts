@@ -26,32 +26,7 @@ export const getMonthEnd = (year: number, month: number) => {
   return 31;
 };
 
-// 現在の日付も含めて7日前の日付を取得するただし1～6日の場合は前月の月末日を含めて7日前の日付を取得する
-// 更に1月の場合は前年の12月を含めて7日前の日付を取得する
-// 更にうるう年の場合は2月29日を含めて7日前の日付を取得する
-// 例：2024年3月1日の場合は2024年2月24日まで取得する
-
-// export const get7DaysAgo = (date: string) => {
-//   const targetDate = new Date(date);
-//   const year = targetDate.getFullYear();
-//   const month = targetDate.getMonth() + 1;
-//   const day = targetDate.getDate();
-//   const isLeap = isLeapYear(year);
-
-//   if (day <= 7) {
-//     if (month === 1) {
-//       return `${year - 1}-${12}-${getMonthEnd(year - 1, 12) - (7 - day)}`;
-//     }
-//     if (month === 3 && isLeap) {
-//       return `${year}-${month - 1}-${29 - (7 - day)}`;
-//     } else {
-//       return `${year}-${month - 1}-${getMonthEnd(year, month - 1) - (7 - day)}`;
-//     }
-//   } else {
-//     return `${year}-${month}-${day - 7}`;
-//   }
-// };
-
+// 受け取った日付からn日前の日付を取得する
 const getDaysAgo = (date: string, index: number) => {
   const targetDate = new Date(date);
   targetDate.setDate(targetDate.getDate() - index);
@@ -62,12 +37,14 @@ const getDaysAgo = (date: string, index: number) => {
   return `${year}/${month < 10 ? "0" + month : month}/${day < 10 ? "0" + day : day}`;
 };
 
+//上記の関数を使って、n日前の日付を配列にして返す
 export const createDaysAgoArray = (dateLength: number) => {
   return Array.from({ length: dateLength }, (_, i) =>
     getDaysAgo(new Date().toISOString(), i),
   );
 };
 
+// 取得した日付の月初と月末を取得
 export const getBeginAndEndOfMonth = (
   date: Date,
 ): { beginMonth: string; endMonth: string } => {

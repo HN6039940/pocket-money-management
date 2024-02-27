@@ -2,15 +2,18 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/slice/Hooks/hooks";
+
 import { listenToDoc } from "../../firebase/firestore/firestore-financeData-operations";
 import { isLoginUser } from "../../firebase/auth/fireauth-config";
 import { setFireStoreData } from "../../store/slice/financeSlice";
 
 import NavBar from "../../components/Navigation/NavBar";
 import MenuBar from "../../components/Navigation/MenuBar";
+import Loading from "../../components/Loding/Loading";
+import ErrorPage from "../Error/ErrorPage";
 
 const User = () => {
-  const { name, id } = useAppSelector((state) => state.auth);
+  const { id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const { data, isLoading, isError } = useQuery({
@@ -29,15 +32,15 @@ const User = () => {
       if (data) {
         dispatch(setFireStoreData(data));
       } else {
-        console.log("Error");
+        dispatch(setFireStoreData({ expense: [], incomes: [] }));
       }
     });
     return () => unsubscribe();
   }, [id, dispatch]);
 
-  if (isLoading) return <p>loading...</p>;
+  if (isLoading) return <Loading />;
 
-  if (isError && !data) return <p>ログインしてください</p>;
+  if (isError && !data) return <ErrorPage />;
 
   return (
     <>
@@ -45,7 +48,7 @@ const User = () => {
       <section className="container mx-auto min-h-dvh px-5">
         <div className="border-b-2 border-black py-5">
           <h1 className=" md:mt-15 mt-8  font-noto-sans-jp text-xl sm:mt-10 sm:text-3xl md:text-5xl">
-            ようこそ {name}
+            ようこそ
           </h1>
           <MenuBar />
         </div>
