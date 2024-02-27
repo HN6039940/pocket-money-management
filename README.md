@@ -1,11 +1,15 @@
-# サービス概要
+# サイトURL
+URL:[pocket-money-management](https://app.netlify.com/sites/pocket-money-management/overview)
+
+## サービス概要
 
 このアプリは、主に日頃のお小遣いや些細な収入や支出のデータを入力し、
 集計を行いどのくらい利用しているのかをグラフを通して可視化をできるようにしたものです。
 主に今月分や過去7日間分、今年度の月別分などのデータにフォーカスしているため直近の収支の比較に便利です。
+開発背景は、限られたお金を月単位、日単位の細かいやり取りをすることが多かったので
+上記に書いてある通り、ピンポイントでのデータ収集を行う所に特化したいと思い開発しました。
 
 ![topPage](https://github.com/HN6039940/pocket-money-management/assets/60053407/63ff4fbd-afcc-4b70-9da3-8b405fc2991c)
-![UserPage](https://github.com/HN6039940/pocket-money-management/assets/60053407/8915f9a5-4121-4346-90e4-89d01c586042)
 ![DashBoard](https://github.com/HN6039940/pocket-money-management/assets/60053407/a8d12fb0-da6f-4256-994a-84946078d2a1)
 
 ## 機能
@@ -87,3 +91,8 @@ Googleまたはメールアドレスを利用して新規登録、ログイン�
 ## 制作期間
 
 15日 (2024/02/12 ~ 2024/02/27)
+
+## 開発中
+
+ページネーションの追加
+ダークモードの追加
