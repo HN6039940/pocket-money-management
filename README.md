@@ -1,6 +1,6 @@
 # サイトURL
 
-URL: [pocket-money-management](https://app.netlify.com/sites/pocket-money-management/overview)
+URL: [pocket-money-management](https://pocket-money-management.netlify.app/)
 
 ## サービス概要
 
