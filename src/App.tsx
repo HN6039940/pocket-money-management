@@ -42,6 +42,7 @@ const BrowserRouter = createBrowserRouter([
   },
   { path: "login", element: <LoginPage /> },
   { path: "signup", element: <SignUp /> },
+  { path: "/__/auth/*", element: null },
 ]);
 
 function App() {
