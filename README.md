@@ -1,6 +1,6 @@
 # サイトURL
 
-URL: [pocket-money-management](https://app.netlify.com/sites/pocket-money-management/overview)
+URL: [pocket-money-management](https://pocket-money-management.netlify.app/)
 
 ## サービス概要
 
@@ -36,7 +36,6 @@ URL: [pocket-money-management](https://app.netlify.com/sites/pocket-money-manage
 
 のグラフが表示されます。
 
-
 ### 入力画面
 
 データを入力する画面です。
@@ -44,12 +43,14 @@ URL: [pocket-money-management](https://app.netlify.com/sites/pocket-money-manage
 （例えば、生活費など）
 
 ![form](https://github.com/HN6039940/pocket-money-management/assets/60053407/1e220be4-96a9-47be-893e-098b80d6ae38)
+
 ### テーブル
 
 今まで入力したデータを収支別でみることができます。
 また、削除機能でデータの削除が行えます。
 
 ![Table](https://github.com/HN6039940/pocket-money-management/assets/60053407/85ea7ddb-83db-44c5-a7f0-4932de70aba5)
+
 ### ログイン機能
 
 Googleまたはメールアドレスを利用して新規登録、ログインができます。
@@ -57,6 +58,7 @@ Googleまたはメールアドレスを利用して新規登録、ログイン�
 
 ![LoginPage](https://github.com/HN6039940/pocket-money-management/assets/60053407/43406559-cbde-486f-8fe0-4cca2b63edbd)
 ![SignOut](https://github.com/HN6039940/pocket-money-management/assets/60053407/15a35b79-b935-4173-bc63-c29c2a89af8a)
+
 ---
 
 ## 主な使用技術
@@ -80,6 +82,7 @@ Googleまたはメールアドレスを利用して新規登録、ログイン�
 | zod                   |
 | uuid                  |
 | reselect              |
+| Rechart               |
 
 ---
 
