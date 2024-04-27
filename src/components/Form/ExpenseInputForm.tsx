@@ -12,7 +12,14 @@ const expenseSchema = z
     expense: z.coerce
       .number()
       .positive({ message: "支出は正の数を入力してください" }),
-    date: z.date(),
+    date: z.date({
+      errorMap: (issue, { defaultError }) => ({
+        message:
+          issue.code === "invalid_date"
+            ? "日付を入力してください"
+            : defaultError,
+      }),
+    }),
     label: z.string().min(1, { message: "1文字以上入力してください" }),
   })
   .refine(

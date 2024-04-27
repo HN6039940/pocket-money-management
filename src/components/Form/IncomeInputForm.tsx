@@ -5,18 +5,31 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useAppSelector } from "../../store/slice/Hooks/hooks";
 import { setFinanceData } from "../../firebase/firestore/firestore-financeData-operations";
+import { formattedDateByja } from "../../utils/format";
 
 const incomeSchema = z
   .object({
     income: z.coerce
       .number()
       .positive({ message: "収入は正の数を入力してください" }),
-    date: z.date(),
+    date: z.date({
+      errorMap: (issue, { defaultError }) => ({
+        message:
+          issue.code === "invalid_date"
+            ? "日付を入力してください"
+            : defaultError,
+      }),
+    }),
   })
-  .refine((data) => data.date <= new Date(), {
-    message: `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}以前の日付を入力してください`,
-    path: ["date"],
-  });
+  .refine(
+    (data) =>
+      new Date(formattedDateByja(data.date)) <=
+      new Date(formattedDateByja(new Date())),
+    {
+      message: `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}以前の日付を入力してください`,
+      path: ["date"],
+    },
+  );
 
 type incomeInput = z.infer<typeof incomeSchema>;
 
